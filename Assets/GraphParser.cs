@@ -23,24 +23,34 @@ namespace Assets
             }
         }
 
-        public void Parse(int[] vertices, int[,] edges)
+        public void Parse(int[] verticies, int[,] edges)
         {
             GraphVertices = new List<GameObject>(); // Creating the list of objects making the graph
 
-            for (int i = 0; i < vertices.Length; i++) // Creating the GO's for the vertices
+            for (int i = 0; i < verticies.Length; i++) // Creating the GO's for the vertices
             {
                 GameObject vertex = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                Vertex.CreateComponent(vertex, i, new Vector3(i, i, 0));
+                Vertex.CreateComponent(vertex, i, new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), UnityEngine.Random.Range(-5.0f, 5.0f), 0));
                 GraphVertices.Add(vertex);
             }
 
-            for (int i = 0; i < edges.Length; i++) // Creating the GO's for the edges 
+            for (int i = 0; i < edges.Length / 2; i++) // Creating the GO's for the edges 
             {
                 GameObject go = new GameObject();
                 go.AddComponent<LineRenderer>();
                 Edge edge = go.AddComponent<Edge>();
-                edge.SetPositions(GraphVertices[edges[i, 0]].transform, GraphVertices[edges[i, 1]].transform);
+                edge.SetPositions(GraphVertices[edges[i, 0] - 1].transform, GraphVertices[edges[i, 1] - 1].transform);
             }
         }
+
+        public void Update()
+        {
+            //for (int i = 0; i < edges.Length / 2; i++) // Creating the GO's for the edges 
+            //{
+            //    edge.SetPositions(GraphVertices[edges[i, 0] - 1].transform, GraphVertices[edges[i, 1] - 1].transform);
+            //}
+        }
+
+
     }
 }
